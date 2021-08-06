@@ -6,33 +6,51 @@
              xmlns:widgets="clr-namespace:AnyStatus.API.Widgets;assembly=AnyStatus.API"
              xmlns:controls="clr-namespace:AnyStatus.Apps.Windows.Features.Dashboard.Controls" 
              xmlns:converters="clr-namespace:AnyStatus.Apps.Windows.Infrastructure.Converters" xmlns:ui="http://schemas.modernwpf.com/2019"
-             mc:Ignorable="d"
-             d:DataContext="{d:DesignInstance Type=widgets:Widget, IsDesignTimeCreatable=False}">
+             mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance widgets:Widget}">
 
     <UserControl.Resources>
         <converters:BranchNameConverter x:Key="BranchNameConverter"/>
         <converters:TimeConverter x:Key="TimeConverter"/>
+        <converters:NameInitialsConverter x:Key="InitialsConverter" />
     </UserControl.Resources>
 
-    <DockPanel Style="{DynamicResource WidgetPanel}">
+    <DockPanel Style="{DynamicResource WidgetPanel}" >
         <controls:ColorStatusIndicator DockPanel.Dock="Left"/>
         <controls:IconStatusIndicator DockPanel.Dock="Left" MinWidth="48"/>
+
+        <Grid Margin="2 2 6 2" DockPanel.Dock="Right" Background="DarkCyan" Height="32" Width="32" VerticalAlignment="Center"
+              ToolTip="{Binding Author}">
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+                       Text="{Binding Author, Converter={StaticResource InitialsConverter}}"/>
+        </Grid>
+
+        <DockPanel Dock="Right" Margin="2" VerticalAlignment="Center">
+            <TextBlock DockPanel.Dock="Top" HorizontalAlignment="Right" FontSize="9" FontWeight="Thin" Foreground="#666" Text="{Binding Author}"/>
+            <TextBlock DockPanel.Dock="Top" HorizontalAlignment="Right" FontSize="9" FontWeight="Thin" Foreground="#666" Text="{Binding Reason}"/>
+        </DockPanel>
+
         <StackPanel Margin="7,0,0,0" VerticalAlignment="Center">
             <TextBlock Text="{Binding Name}" TextTrimming="CharacterEllipsis"/>
-            <StackPanel Orientation="Horizontal">
-                <StackPanel.Resources>
+
+
+            <DockPanel d:DataContext="{d:DesignInstance widgets:IPipeline}" >
+                <DockPanel.Resources>
                     <Style TargetType="TextBlock">
                         <Setter Property="Margin" Value="0,0,11,0"/>
                         <Setter Property="FontSize" Value="12"/>
                         <Setter Property="FontWeight" Value="Light"/>
                         <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
                     </Style>
-                </StackPanel.Resources>
-                <TextBlock Text="{Binding BuildNumber}"/>
-                <TextBlock Text="{Binding Branch, Converter={StaticResource BranchNameConverter}}"/>
-                <TextBlock Text="{Binding FinishTime, Converter={StaticResource TimeConverter}}"/>
-                <TextBlock Text="{Binding Duration, Converter={StaticResource TimeConverter}}"/>
-            </StackPanel>
+                </DockPanel.Resources>
+                
+
+
+                <TextBlock DockPanel.Dock="Left" Text="{Binding BuildNumber}"/>
+                <TextBlock DockPanel.Dock="Left" Text="{Binding Branch, Converter={StaticResource BranchNameConverter}}"/>
+                <TextBlock DockPanel.Dock="Left" Text="{Binding FinishTime, StringFormat='Finished {0}', Converter={StaticResource TimeConverter}}"/>
+                <TextBlock DockPanel.Dock="Left" Text="{Binding Duration, StringFormat='Ran for {0}', Converter={StaticResource TimeConverter}}"/>
+            </DockPanel>
         </StackPanel>
     </DockPanel>
 </UserControl>

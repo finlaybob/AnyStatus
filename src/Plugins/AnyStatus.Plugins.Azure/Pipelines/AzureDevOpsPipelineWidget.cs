@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace AnyStatus.Plugins.Azure.DevOps.Builds
 {
@@ -27,8 +28,10 @@ namespace AnyStatus.Plugins.Azure.DevOps.Builds
         private string _buildNumber;
         private DateTime _finishTime;
         private TimeSpan _duration;
+        private string _reason;
         private string _author;
-        private string _title;
+        private string _imageUrl;
+        private string _email;
 
         [Required]
         [EndpointSource]
@@ -83,16 +86,36 @@ namespace AnyStatus.Plugins.Azure.DevOps.Builds
             set => Set(ref _duration, value);
         }
 
+        [JsonIgnore]
+        [Browsable(false)]
+        public string Reason
+        {
+            get => _reason;
+            set => Set(ref _reason, value);
+        }
+
+        [JsonIgnore]
+        [Browsable(false)]
         public string Author
         {
             get => _author;
             set => Set(ref _author, value);
         }
 
-        public string Title
+        [JsonIgnore]
+        [Browsable(false)]
+        public string ImageUrl
         {
-            get => _title;
-            set => Set(ref _title, value);
+            get => _imageUrl;
+            set => Set(ref _imageUrl,value);
+        }
+
+        [JsonIgnore]
+        [Browsable(false)]
+        public string Email
+        {
+            get => _email;
+            set => Set(ref _email ,value);
         }
 
         [JsonIgnore]
@@ -120,8 +143,8 @@ namespace AnyStatus.Plugins.Azure.DevOps.Builds
             Duration = default;
             FinishTime = default;
             BuildNumber = null;
+            Reason = null;
             Author = null;
-            Title = null;
         }
     }
 }

@@ -56,6 +56,7 @@ namespace AnyStatus.Plugins.Azure.API.Contracts
         public double Percentage { get; set; }
 
         public IdentityRef RequestedBy { get; set; }
+        public IdentityRef RequestedFor { get; set; }
 
         public string Reason { get; set; }
 

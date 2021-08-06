@@ -12,7 +12,7 @@ namespace AnyStatus.API.Widgets
 
         TimeSpan Duration { get; set; }
 
-        public string Title { get; }
         public string Author { get; }
+        public string Reason { get; }
     }
 }
