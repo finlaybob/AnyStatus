@@ -27,6 +27,8 @@ namespace AnyStatus.Plugins.Azure.DevOps.Builds
         private string _buildNumber;
         private DateTime _finishTime;
         private TimeSpan _duration;
+        private string _author;
+        private string _title;
 
         [Required]
         [EndpointSource]
@@ -81,6 +83,18 @@ namespace AnyStatus.Plugins.Azure.DevOps.Builds
             set => Set(ref _duration, value);
         }
 
+        public string Author
+        {
+            get => _author;
+            set => Set(ref _author, value);
+        }
+
+        public string Title
+        {
+            get => _title;
+            set => Set(ref _title, value);
+        }
+
         [JsonIgnore]
         [Browsable(false)]
         public string BuildId { get; set; }
@@ -106,6 +120,8 @@ namespace AnyStatus.Plugins.Azure.DevOps.Builds
             Duration = default;
             FinishTime = default;
             BuildNumber = null;
+            Author = null;
+            Title = null;
         }
     }
 }

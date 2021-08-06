@@ -11,5 +11,8 @@ namespace AnyStatus.API.Widgets
         DateTime FinishTime { get; set; }
 
         TimeSpan Duration { get; set; }
+
+        public string Title { get; }
+        public string Author { get; }
     }
 }
